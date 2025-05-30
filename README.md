@@ -19,16 +19,18 @@ nginx-static-site/
 
 ## How to run
 
-Enter the project directory
+##### Enter the project directory
 cd path/to/nginx-static-site
 
-Build the Docker image using the local Dockerfile
+##### Build the Docker image using the local Dockerfile
 docker build -t my-nginx-site .
 
-Run the container with port mapping to expose the web server
+##### Run the container with port mapping to expose the web server
+
 docker run -d --name nginx-service-01 -p 8080:80 my-nginx-site
 
-Then open your browser and go to:
+##### Then open your browser and go to:
+
 http://localhost:8080
 
 
