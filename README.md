@@ -1,9 +1,9 @@
 - 👋 Hi, I’m Sandra
 - 👀 I’m interested in the power of data
-- 🌱 I’m currently learning Python and SQL
-- 💞️ I’m looking to collaborate on Data Analyst work projects
+- 🌱 I’m currently learning Python, SQL & Docker
+- 💞️ I’m looking to collaborate on Data Engineering work projects
 - 📫 You can reach me at cirkovics1145@gmail.com
-- ⚡ Fun fact: I never open the packaging as indicated
+- ⚡ Fun fact: I explain complex things like I’m drawing them — making every detail visible.
 - 😄 
 
 
