@@ -1,13 +1,38 @@
-- 👋 Hi, I’m Sandra
-- 👀 I’m interested in the power of data
-- 🌱 I’m currently learning Python, SQL & Docker
-- 💞️ I’m looking to collaborate on Data Engineering work projects
-- 📫 You can reach me at cirkovics1145@gmail.com
-- ⚡ Fun fact: I explain complex things like I’m drawing them — making every detail visible.
-- 😄 
+# Static Website with Nginx in Docker
+
+## Task Description
+
+Create a simple static website and serve it using the official Nginx Docker image. The website should be accessible both inside the Docker container and from outside (your host machine).
+
+### Requirements:
+- Use the official Nginx Docker image.
+- Host a static HTML page.
+- Ensure the website is accessible from your local machine through proper port mapping.
+
+---
+
+## Files structure on local machine
+
+nginx-static-site/
+├── index.html
+└── Dockerfile
 
 
-<!---
-oSANDRAo/oSANDRAo is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+## How to run
+_______________________________________________________________________________________
+
+# Enter the project directory
+cd path/to/nginx-static-site
+
+# Build the Docker image using the local Dockerfile
+docker build -t my-nginx-site .
+
+# Run the container with port mapping to expose the web server
+docker run -d --name nginx-service-01 -p 8080:80 my-nginx-site
+
+# Then open your browser and go to:
+http://localhost:8080
+
+
+Thanx for visiting :)
+
