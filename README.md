@@ -13,23 +13,27 @@ Create a simple static website and serve it using the official Nginx Docker imag
 
 ## Files structure on local machine
 
-nginx-static-site:
+nginx-static-site:  
 - index.html
 - Dockerfile
 
 ## How to run
 
-1. enter the project directory
-2. build the Docker image using the local Dockerfile
-3. run the container with port mapping to expose the web server
-4. then open your browser using:
+1 –  
+_Enter the project directory_  
+      **cd path/to/nginx-static-site**  
 
-##### The code:
-   
-1. cd path/to/nginx-static-site
-2. docker build -t my-nginx-site .
-3. docker run -d --name nginx-service-01 -p 8080:80 my-nginx-site
-4. http://localhost:8080
+2 –  
+_Build the Docker image using the local Dockerfile_
+**docker build -t my-nginx-site .**  
+
+3 –  
+_Run the container with port mapping to expose the web server_  
+**docker run -d --name nginx-service-01 -p 8080:80 my-nginx-site**  
+
+4 –  
+_Then open your browser using:_  
+      **http://localhost:8080**
 
 
 
