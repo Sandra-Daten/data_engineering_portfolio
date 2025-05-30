@@ -20,20 +20,24 @@ nginx-static-site:
 ## How to run
 
 1 –  
-_Enter the project directory_  
-      **cd path/to/nginx-static-site**  
+***Enter the project directory*** 
+
+cd path/to/nginx-static-site  
 
 2 –  
-_Build the Docker image using the local Dockerfile_
-**docker build -t my-nginx-site .**  
+***Build the Docker image using the local Dockerfile***  
+
+docker build -t my-nginx-site .  
 
 3 –  
-_Run the container with port mapping to expose the web server_  
-**docker run -d --name nginx-service-01 -p 8080:80 my-nginx-site**  
+***Run the container with port mapping to expose the web server*** 
+
+docker run -d --name nginx-service-01 -p 8080:80 my-nginx-site  
 
 4 –  
-_Then open your browser using:_  
-      **http://localhost:8080**
+***Then open your browser using:***  
+
+http://localhost:8080
 
 
 
