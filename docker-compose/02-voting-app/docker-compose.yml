@@ -1,0 +1,51 @@
+services:
+  
+  voting-app:
+    build: ./vote
+    networks:
+      - front-tier
+      - back-tier
+    ports:
+      - "5001:80"
+    volumes:
+      - ./vote:/app
+
+  
+  redis:
+    image: redis:latest
+    networks:
+      - back-tier
+    ports:
+      - "6378:6379"
+   
+  worker:
+    build: ./worker
+    networks:
+      - back-tier
+
+  db:
+    image: postgres:latest
+    networks:
+      - back-tier
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  result-app:
+    build: ./result
+    networks:
+      - front-tier  
+      - back-tier
+    ports:
+      - "5002:80"
+      - "5858:5858"
+    volumes:
+      - ./result:/app
+
+
+networks:
+  front-tier:
+  back-tier:
+
+
+volumes:
+  pgdata:
