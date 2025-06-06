@@ -21,5 +21,5 @@ Looking forward to hearing from you soon!
 
 **Hakuna matata!**
 
-^       ^
+
 (˶˃ ᵕ ˂˶)
