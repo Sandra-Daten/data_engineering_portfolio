@@ -20,3 +20,6 @@ I appreciate you being here! While you're digging through this portfolio, I'm al
 Looking forward to hearing from you soon!  
 
 **Hakuna matata!**
+
+^       ^
+(˶˃ ᵕ ˂˶)
