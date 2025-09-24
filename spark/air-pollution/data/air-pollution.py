@@ -64,7 +64,7 @@ df = (df
 )
 
 # df.show()
-print("Print df Schema with new data type:")
+print("Print Schema with data type changed:")
 df.printSchema()
 
 # 6. Add air quality categorization columns for each year
@@ -78,14 +78,14 @@ for y in years:
         .when((col(f"{y}") > 200) & (col(f"{y}") <= 300), "Very unhealthy")
         .otherwise("Hazardous")
     )
-print("New columns for the air quality categorizations added:")
+print("Air quality categorizations columns added:")
 df.show(truncate=False)
 
 # 7. Rename Status columns to remove 'AQI' from column names
 print(df.columns)
 new_columens = ['city', 'country', 'AQI_2017', 'AQI_2018', 'AQI_2019', 'AQI_2020', 'AQI_2021', 'AQI_2022', 'AQI_2023', 'Status_2017', 'Status_2018', 'Status_2019', 'Status_2020', 'Status_2021', 'Status_2022', 'Status_2023']
 df = df.toDF(*new_columens)
-print("Remove 'AQI' part from a Status_AQI_YYYY:")
+print("Renamed Status columns:")
 df.show()
 
 # # 8. Reorganize columns order --> I quit this idea at the end.
@@ -130,7 +130,7 @@ df_all_countries.show(truncate=False)
 
 # 13. Count how many unique countries are in df
 num_all_countries = df_all_countries.count()
-print("UKUPAN BROJ ZEMALJA:", num_all_countries)
+print("Total Number Of Countries:", num_all_countries)
 
 # 14. Show how many cities per country there are
 cities_per_country = df.groupBy("country").count()
@@ -146,29 +146,29 @@ cities_per_country.show()
 # citiesNum_in_argentina.show()
 
 # 15. Top 10 cities with the highest values in 2023
-top10_2023 = df.select("city", "AQI_2023").orderBy(col("AQI_2023").desc()).limit(10)
-print("top10_2023:")
-top10_2023.show()
+top10_cities_2023 = df.select("city", "AQI_2023").orderBy(col("AQI_2023").desc()).limit(10)
+print("top10_cities_2023:")
+top10_cities_2023.show()
 
 ## 16/17/18. Show the AQI values through the years for any city by your choice
 
 # 1st approach - when control over the columns is needed (mainly to select particular columns from the big dataframes) 
 Lahore_trend = df.select('city', 'country', 'AQI_2017', 'AQI_2018', 'AQI_2019', 'AQI_2020', 'AQI_2021', 'AQI_2022', 'AQI_2023', 'Status_2017', 'Status_2018', 'Status_2019', 'Status_2020', 'Status_2021', 'Status_2022', 'Status_2023').where(col("city") == "Lahore")
-print("Lahore_trend: 1st pproach")
+print("LahoreCity_trend: 1st pproach")
 Lahore_trend.show(truncate=False)
 
 # 2nd approach - mainly to select all columns for small DF
 Lahore_trend_2 = df.filter(col("city") == "Lahore")
-print("Lahore_trend: 2nd approach")
+print("LahoreCity_trend: 2nd approach")
 Lahore_trend_2.show(truncate=False)
 
-western_balkan = df.filter((col("city") == "Novi Sad") | (col("city") == "Belgrade") | (col("city") == "Ljubljana"))
-print("western_balkan:")
-western_balkan.show(truncate=False)
+western_balkans = df.filter((col("city") == "Novi Sad") | (col("city") == "Belgrade") | (col("city") == "Ljubljana"))
+print("western_balkans_3_cities_compared:")
+western_balkans.show(truncate=False)
 
 # 19. Show cities in Serbia
 cities_in_serbia = df.select("city").where(col("country") == "Serbia")
-print("Cities in Serbia")
+print("Cities in Serbia:")
 cities_in_serbia.show()
 
 # 20. Calculate average AQI for all cities in one country in 2023
@@ -186,11 +186,11 @@ serbia_avg_2023 = df.filter(df.country == "Serbia")\
 print("Serbia_avg_2023:")
 serbia_avg_2023.show()
 
-## 21. Show top 5 the most polluted countries in 2023
-top5_2023 = df.select("country", "AQI_2023")\
+## 21. Top 5 the most polluted countries in 2023
+top5_countries_2023 = df.select("country", "AQI_2023")\
               .orderBy(col("AQI_2023").desc()).limit(5)
-print("top5_2023")
-top5_2023.show()
+print("top5_countries_2023")
+top5_countries_2023.show()
 
 # 22. Show the cities which AQI values are less in 2023 than in 2017: ROUND VS FORMAT_NUMBER
 # air_improved = df.select("city", "AQI_2023", "AQI_2017")\
@@ -204,7 +204,7 @@ air_improved = df.select("city", "AQI_2023", "AQI_2017")\
        .where((col("AQI_2023")) < (col("AQI_2017")))\
        .withColumn("Improvement", format_number(abs(col("AQI_2023") - col("AQI_2017")), 2))
 
-print("air_improved_FORMAT_NUMBER:")
+print("air_improved_2017 vs 2023:")
 air_improved.show(truncate=False)
 
 
@@ -288,8 +288,8 @@ df_with_max_min.show()
 # 27. Top 3 cities with the highest pollution value per year
 window_2017 = Window.orderBy(col("AQI_2017").desc())
 df_top_global = df.select("city", "country", "AQI_2017").withColumn("ID", row_number().over(window_2017))
-print("top3_2017_1:") 
-top3_2017 = df_top_global.filter(col("ID") <= 3).show()
+print("top3_cities_2017_A:") 
+top3_cities_2017 = df_top_global.filter(col("ID") <= 3).show()
 
 years = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
 ## A beginner approach :)
@@ -300,26 +300,26 @@ years = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
 
 # 28. A more curious beginner approach :D
-top3_per_year = {}
+top3_cities_per_year = {}
 
 for y in years:
     window_year = Window.orderBy(col(f"AQI_{y}").desc())
     df_top = df.select("city", "country", f"AQI_{y}")\
                .withColumn("rank", rank().over(window_year))\
                .filter(col("rank") <= 3)
-    top3_per_year[y] = df_top
+    top3_cities_per_year[y] = df_top
 
 # A result for 2017
-print("top3_2017_2:")
-top3_per_year[2017].show()
+print("top3_cities_2017_B:")
+top3_cities_per_year[2017].show()
 
 ##     * The second approach is better because the rank() transformation will include all cities with the same AQI value, not just the first one in the DataFrame.
 
 # 29. For each country, rank the cities by their AQI value in 2023
 window_2023 = Window.partitionBy("country").orderBy(col("AQI_2023").desc())
-top_2023 = df.select("city", "country", "AQI_2023").withColumn("ID", row_number().over(window_2023))
-print("top_2023:")
-top_2023.show(30, truncate=False)
+top_AQI_per_cities_2023 = df.select("city", "country", "AQI_2023").withColumn("ID", row_number().over(window_2023))
+print("cities_rank_per_country_2023:")
+top_AQI_per_cities_2023.show(30, truncate=False)
 
 # 30. Value Distribution -> group the 2023 values into “buckets”, e.g.:
 
