@@ -1,14 +1,10 @@
 # --------------------------------------------------------------------------------------------------------- #
 #                           Analysis of global air pollution data from 2017 to 2023
 # --------------------------------------------------------------------------------------------------------- #
-#                               Dataset:  Worldwide City Air Pollution Trends
-#                   https://www.opendatabay.com/data/ai-ml/184ba6aa-e16c-4246-ac53-3b8e987e5423
-# --------------------------------------------------------------------------------------------------------- #
-#                             Collected on Opendaybay Platform as a Free Dataset Library 
-# --------------------------------------------------------------------------------------------------------- #
 
 
 
+# Function to reduce Spark/Java logs
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.window import Window
@@ -46,7 +42,7 @@ df.printSchema()
 print("Show the first 10 rows:")
 df.show(10, truncate=False)
 
-# 5. Change the data type of the year columns
+# 5. Change the data type for years columns
 df=(df
 .withColumn("AQI_2017", col("2017").cast(DoubleType()))
 .withColumn("AQI_2018", col("2018").cast(DoubleType()))
@@ -71,7 +67,7 @@ df = (df
 print("Print df Schema with new data type:")
 df.printSchema()
 
-# 6. Add new columns for the air quality catagorizations
+# 6. Add air quality categorization columns for each year
 years = ["AQI_2017", "AQI_2018", "AQI_2019", "AQI_2020", "AQI_2021", "AQI_2022", "AQI_2023"]
 for y in years:
     df = df.withColumn(
@@ -82,37 +78,37 @@ for y in years:
         .when((col(f"{y}") > 200) & (col(f"{y}") <= 300), "Very unhealthy")
         .otherwise("Hazardous")
     )
-print("New columns for the air quality catagorizations added:")
+print("New columns for the air quality categorizations added:")
 df.show(truncate=False)
 
-# 7. Remove "AQI" part from a Status_AQI_YYYY
+# 7. Rename Status columns to remove 'AQI' from column names
 print(df.columns)
 new_columens = ['city', 'country', 'AQI_2017', 'AQI_2018', 'AQI_2019', 'AQI_2020', 'AQI_2021', 'AQI_2022', 'AQI_2023', 'Status_2017', 'Status_2018', 'Status_2019', 'Status_2020', 'Status_2021', 'Status_2022', 'Status_2023']
 df = df.toDF(*new_columens)
 print("Remove 'AQI' part from a Status_AQI_YYYY:")
 df.show()
 
-# # 8. Create a new organizaition of columns --> I quit this idea at the end.
+# # 8. Reorganize columns order --> I quit this idea at the end.
 # cols = ["city", "country"]
 
 # for y in range(2017, 2024):
 #     cols.append(f"AQI_{y}")
 #     cols.append(f"Status_{y}")
 
-# # 9. Apply a new columns' organizaton
+# # 9. Apply a new columns' organization
 # df = df.select(cols)
 # df.show()
 
 
 
-# --------------- MAKE SURE WHERE MY DATAFRAME IS --------------- #
+# --------------- MAKE SURE WHERE THE DATAFRAME IS --------------- #
 
 
 
 # 10. Check where Spark writes the data
 print("Default filesystem:", spark._jsc.hadoopConfiguration().get("fs.defaultFS"))
 
-# 11. Save transfromed df in Parquet format on HDFS
+# 11. Save transformed df in Parquet format on HDFS
 df.write.mode("overwrite").parquet("/user/sandra/air_pollution/processed") 
 
 df.write.mode("overwrite").parquet("hdfs://namenode:9000/user/sandra/air_pollution/processed") # before this, Spark had written data on local mashine 
@@ -123,7 +119,7 @@ df2.show()
 
 
 
-# --------------- ANALITICAL TASKS --------------- #
+# --------------- ANALYTICAL TASKS --------------- #
 
 
 
@@ -136,7 +132,7 @@ df_all_countries.show(truncate=False)
 num_all_countries = df_all_countries.count()
 print("UKUPAN BROJ ZEMALJA:", num_all_countries)
 
-# 14. Show how many cities there are in each country
+# 14. Show how many cities per country there are
 cities_per_country = df.groupBy("country").count()
 cities_per_country = cities_per_country.withColumnRenamed("count", "num_cities")
 cities_per_country = cities_per_country.orderBy("country")
@@ -149,33 +145,33 @@ cities_per_country.show()
 # citiesNum_in_argentina = cities_per_country.where(col("country") == "Argentina")
 # citiesNum_in_argentina.show()
 
-# 15. Show top 10 cities with the hights values in 2023
+# 15. Top 10 cities with the highest values in 2023
 top10_2023 = df.select("city", "AQI_2023").orderBy(col("AQI_2023").desc()).limit(10)
 print("top10_2023:")
 top10_2023.show()
 
 ## 16/17/18. Show the AQI values through the years for any city by your choice
 
-# 1st approach - useful when we need a control over the columns (eg. particular columns from the big data frames) 
+# 1st approach - when control over the columns is needed (mainly to select particular columns from the big dataframes) 
 Lahore_trend = df.select('city', 'country', 'AQI_2017', 'AQI_2018', 'AQI_2019', 'AQI_2020', 'AQI_2021', 'AQI_2022', 'AQI_2023', 'Status_2017', 'Status_2018', 'Status_2019', 'Status_2020', 'Status_2021', 'Status_2022', 'Status_2023').where(col("city") == "Lahore")
 print("Lahore_trend: 1st pproach")
 Lahore_trend.show(truncate=False)
 
-# 2nd approach - when we need all columns; idealy for the small data frames 
+# 2nd approach - mainly to select all columns for small DF
 Lahore_trend_2 = df.filter(col("city") == "Lahore")
 print("Lahore_trend: 2nd approach")
 Lahore_trend_2.show(truncate=False)
 
-western_balcan = df.filter((col("city") == "Novi Sad") | (col("city") == "Belgrade") | (col("city") == "Ljubljana"))
+western_balkan = df.filter((col("city") == "Novi Sad") | (col("city") == "Belgrade") | (col("city") == "Ljubljana"))
 print("western_balkan:")
-western_balcan.show(truncate=False)
+western_balkan.show(truncate=False)
 
 # 19. Show cities in Serbia
 cities_in_serbia = df.select("city").where(col("country") == "Serbia")
 print("Cities in Serbia")
 cities_in_serbia.show()
 
-# 20. Calculate avarage AQI for all cities in one country in 2023
+# 20. Calculate average AQI for all cities in one country in 2023
 avg_pollution_2023 = df.groupBy("country")\
                        .agg(round(avg("AQI_2023"),2).alias("avg_AQI_2023"))\
                        .orderBy(col("avg_AQI_2023").desc())
@@ -197,19 +193,19 @@ print("top5_2023")
 top5_2023.show()
 
 # 22. Show the cities which AQI values are less in 2023 than in 2017: ROUND VS FORMAT_NUMBER
-# air_imporved = df.select("city", "AQI_2023", "AQI_2017")\
+# air_improved = df.select("city", "AQI_2023", "AQI_2017")\
 #        .where((col("AQI_2023")) < (col("AQI_2017")))\
 #        .withColumn("Improvement", round(abs(col("AQI_2023") - col("AQI_2017")), 2))
 
-# print("air_imporved:")
-# air_imporved.show(truncate=False)
+# print("air_improved:")
+# air_improved.show(truncate=False)
 
-air_imporved = df.select("city", "AQI_2023", "AQI_2017")\
+air_improved = df.select("city", "AQI_2023", "AQI_2017")\
        .where((col("AQI_2023")) < (col("AQI_2017")))\
        .withColumn("Improvement", format_number(abs(col("AQI_2023") - col("AQI_2017")), 2))
 
-print("air_imporved_FORMAT_NUMBER:")
-air_imporved.show(truncate=False)
+print("air_improved_FORMAT_NUMBER:")
+air_improved.show(truncate=False)
 
 
 
@@ -289,14 +285,14 @@ df_with_max_min.show()
 
 
 
-# 27. Find top 3 cities with the hights pollution value for wach year
+# 27. Top 3 cities with the highest pollution value per year
 window_2017 = Window.orderBy(col("AQI_2017").desc())
 df_top_global = df.select("city", "country", "AQI_2017").withColumn("ID", row_number().over(window_2017))
 print("top3_2017_1:") 
 top3_2017 = df_top_global.filter(col("ID") <= 3).show()
 
 years = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
-## A biginner approach :)
+## A beginner approach :)
 # for y in years:
 #     window_year = Window.orderBy(col(f"AQI_{y}").desc())
 #     df_top_global = df.select("city", "country", f"AQI_{y}").withColumn("ID", row_number().over(window_year))

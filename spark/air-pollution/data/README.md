@@ -5,58 +5,63 @@ between 2017--2023 using PySpark.\
 The dataset contains information about Air Quality Index (AQI) values
 for different countries and cities.
 
+---
+
+## Dataset
+   **Worldwide City Air Pollution Trends**  
+   [Link]( https://www.opendatabay.com/data/ai-ml/184ba6aa-e16c-4246-ac53-3b8e987e5423)
+
+**The source:** Opendaybay Platform (as a Free Dataset Library; opendatabay.com) 
+
+---
+
 ## Project Structure
 
-    .
+    spark/
     ├── air-pollution/
-    │   ├── data/                # Dataset (CSV files)
-    │   ├── scripts/             # PySpark scripts
-    │   └── README.md            # Project documentation
+    │   ├── data/                # Dataset (CSV files) & air-pollution.py file
+    │   |── README.md            # Project documentation
+    │   |__ images               # Screenshots/Visualization
+    │
     ├── wildlife/                # (Another project, mounted separately)
-    └── docker-compose.yml       # Container setup
+    |__ docker-compose.yml       # Container setup
+    
+---
 
 ## Features
 
 -   Data preprocessing with PySpark\
 -   Filtering of highly polluted cities\
 -   Aggregation of yearly AQI values\
--   Visualization-ready outputs
+
+---
 
 ## Requirements
 
--   Python 3.8+\
--   Apache Spark & PySpark\
+-   Python 3
+-   Apache Spark & PySpark
+-   HDFS
 -   Docker & Docker Compose (optional for containerized execution)
+
+---
 
 ## How to Run
 
-1.  Clone the repository:
-
-``` bash
-git clone https://github.com/your-username/air-pollution.git
-cd air-pollution
-```
-
-2.  Run PySpark script locally:
+1.  Run PySpark script locally:
 
 ``` bash
 python3 scripts/air_pollution.py
 ```
 
-3.  Or run inside Docker:
+2.  Or run inside Docker:
 
 ``` bash
-docker-compose up
+docker-compose up -d
 ```
+
+---
 
 ## Example Output
 
-Screenshot examples of Spark DataFrame filtering and analysis results
-can be added in this section:
-
 ![Example Screenshot](images/example.png)
 
-## Author
-
-Sandra Ćirković\
-GitHub: [your-username](https://github.com/your-username)
