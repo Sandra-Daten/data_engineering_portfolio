@@ -22,7 +22,7 @@ The goal is to identify trends, compare data sources, and visualize results that
 ## Project Structure
 
 ```
-wildlife-losses/
+wildlife/
 │── wildlife_hunting_losses.csv      # Dataset with hunting-related wildlife losses
 │── wildlife_traffic_losses.csv      # Dataset with traffic-related wildlife losses
 │── wildlife_losses.py               # Python script with Spark transformations & analysis
