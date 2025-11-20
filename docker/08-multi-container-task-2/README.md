@@ -33,7 +33,7 @@ voting-app/
  redis        - Redis        - Queue for storing incoming votes |
  worker       - Java         - Background service that reads votes from Redis and saves them to PostgreSQL |
  db           - PostgreSQL   - Persistent database |
- resul`       - Node.js      - Frontend for displaying real-time vote results |
+ result       - Node.js      - Frontend for displaying real-time vote results |
 
 ## Networks
 
