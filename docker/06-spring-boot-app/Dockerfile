@@ -3,16 +3,16 @@ FROM maven:3.9.9-eclipse-temurin-8 AS builder
 
 WORKDIR /app
 
-# Kopiraj ceo Maven projekat
+# Copy entire Maven project
 COPY demo/ .
 
 # Build
 RUN mvn clean package
 
-# Kopiraj jar u deljeni folder unutar kontejnera
+# Copy jar in the shared volume in the container
 RUN mkdir -p /output && cp target/*.jar /output/app.jar
 
-# Kad se run pokrene, kopiraj app.jar u mountovani volume
+# After run, copy app.jar in mounted volume
 CMD ["ls", "/output"]
 
 
