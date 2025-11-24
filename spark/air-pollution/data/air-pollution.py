@@ -211,7 +211,7 @@ air_improved.show(truncate=False)
 
 #    * Pretvori kolone `2017–2023` u dve kolone:
 #      * `year` (npr. 2017, 2018, ...)
-#      * `pollution` (brojčana vrednost)
+#      * `pollution` (numeric value)
 
 df_for_pivot = df.select(
     "city",
