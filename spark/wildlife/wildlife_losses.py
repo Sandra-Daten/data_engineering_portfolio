@@ -108,10 +108,10 @@ traffic_100.show(truncate = False)
 # Top 5 divljači sa najvećim ukupnim gubicima po godini
 df = df.withColumn("Vrednost_Total", col("Vrednost_Lov") + col("Vrednost_Saobraćaj"))
 window_by_year = Window.partitionBy("God").orderBy(col("Vrednost_Total").desc())
-df_with_rank = df.withColumn("row_number", row_number().over(window_by_year))
+df_with_rownum = df.withColumn("row_number", row_number().over(window_by_year))
 # df.select("God").distinct().show()
 print("TOP 5_BY YEAR:")
-df_top5_by_year = df_with_rank.filter(col("row_number") <= 5).show(truncate=False)
+df_top5_by_year = df_with_rownum.filter(col("row_number") <= 5).show(truncate=False)
 
 # Top 5 divljači sa najvećim ukupnim gubicima globalno
 # df = df.withColumn("Vrednost_Total", col("Vrednost_Lov") + col("Vrednost_Saobraćaj"))
@@ -123,7 +123,7 @@ df_top5_global.show(truncate=False)
 
 # Divljači sa najvećim gubicima u svakoj godini
 #   --> Filtrirati samo red sa row_number = 1, ovo vraća najveći gubitak po godini
-df_highest_losses = df_with_rank.filter(col("row_number") == 1).select("N_VrstaDivljaci", "God", "Vrednost_Total")
+df_highest_losses = df_with_rownum.filter(col("row_number") == 1).select("N_VrstaDivljaci", "God", "Vrednost_Total")
 df_highest_losses.show(truncate=False)
 
 
