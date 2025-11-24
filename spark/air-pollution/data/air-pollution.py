@@ -104,6 +104,7 @@ print("Default filesystem:", spark._jsc.hadoopConfiguration().get("fs.defaultFS"
 # 11. Save transformed df in Parquet format on HDFS
 df.write.mode("overwrite").parquet("/user/sandra/air_pollution/processed") 
 
+# write on hdfs no matter what default system is (result is shown under #11.)
 df.write.mode("overwrite").parquet("hdfs://namenode:9000/user/sandra/air_pollution/processed") # before this, Spark had written data on local mashine 
 
 print("If data exist in Parquet format on HDFS, show data frame as df2:")
