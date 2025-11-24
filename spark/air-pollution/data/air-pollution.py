@@ -210,7 +210,7 @@ air_improved.show(truncate=False)
 # 23. Unpivot (melt) AQI_YYYY columns in one column
 
 #    * Pretvori kolone `2017–2023` u dve kolone:
-#      * `year` (npr. 2017, 2018, ...)
+#      * `year` (eg. 2017, 2018, ...)
 #      * `pollution` (numeric value)
 
 df_for_pivot = df.select(
