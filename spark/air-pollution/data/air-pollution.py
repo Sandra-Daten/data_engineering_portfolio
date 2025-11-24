@@ -237,7 +237,7 @@ pivoted_2.show()
 
 years = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
 
-# A beginner approach :)
+# Approach A
 # diff_by_years = df.withColumn("diff_17/18", round(abs(col(f"AQI_{years[0]}") - col(f"AQI_{years[1]}")), 2))\
 #                   .withColumn("diff_18/19", round(abs(col(f"AQI_{years[1]}") - col(f"AQI_{years[2]}")), 2))\
 #                   .withColumn("diff_19/20", round(abs(col(f"AQI_{years[2]}") - col(f"AQI_{years[3]}")), 2))\
@@ -247,7 +247,7 @@ years = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
     
 # diff_by_years.show()   
 
-## 25. A more curious beginner approach :D
+## 25. Approach B
 df_with_diffs = df # a copy of a df
 columns_to_fix = ["AQI_2017", "AQI_2018", "AQI_2019", "AQI_2020", "AQI_2021", "AQI_2022", "AQI_2023"]
 df_with_diffs = df_with_diffs.na.replace(0, None, subset=columns_to_fix)
@@ -286,14 +286,14 @@ print("top3_cities_2017_A:")
 top3_cities_2017 = df_top_global.filter(col("ID") <= 3).show()
 
 years = [2017, 2018, 2019, 2020, 2021, 2022, 2023]
-## A beginner approach :)
+## Approach A
 # for y in years:
 #     window_year = Window.orderBy(col(f"AQI_{y}").desc())
 #     df_top_global = df.select("city", "country", f"AQI_{y}").withColumn("ID", row_number().over(window_year))
 #     top3_cities = df_top_global.filter(col("ID") <= 3).show()
 
 
-# 28. A more curious beginner approach :D
+# 28. Approach B
 top3_cities_per_year = {}
 
 for y in years:
