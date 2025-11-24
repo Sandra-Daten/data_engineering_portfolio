@@ -76,8 +76,8 @@ df.show(truncate=False)
 
 # 7. Rename Status columns to remove 'AQI' from column names
 print(df.columns)
-new_columens = ['city', 'country', 'AQI_2017', 'AQI_2018', 'AQI_2019', 'AQI_2020', 'AQI_2021', 'AQI_2022', 'AQI_2023', 'Status_2017', 'Status_2018', 'Status_2019', 'Status_2020', 'Status_2021', 'Status_2022', 'Status_2023']
-df = df.toDF(*new_columens)
+new_columns = ['city', 'country', 'AQI_2017', 'AQI_2018', 'AQI_2019', 'AQI_2020', 'AQI_2021', 'AQI_2022', 'AQI_2023', 'Status_2017', 'Status_2018', 'Status_2019', 'Status_2020', 'Status_2021', 'Status_2022', 'Status_2023']
+df = df.toDF(*new_columns)
 print("Renamed Status columns:")
 df.show()
 
