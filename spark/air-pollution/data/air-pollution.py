@@ -53,15 +53,8 @@ df=(df
 .withColumn("AQI_2023", col("2023").cast(DoubleType()))
 )
 
-df = (df
-.drop("2017")
-.drop("2018")
-.drop("2019")
-.drop("2020")
-.drop("2021")
-.drop("2022")
-.drop("2023")
-)
+# delete columns 2017-2023
+df = df.drop("2017", "2018", "2019", "2020", "2021", "2022", "2023")
 
 # df.show()
 print("Print Schema with data type changed:")
