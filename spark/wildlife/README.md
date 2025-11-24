@@ -4,7 +4,7 @@
 This project analyzes wildlife losses caused by **hunting** and **traffic accidents**.  
 The analysis is performed using **Apache Spark** and **Python** to process and explore the datasets.
 
-The goal is to identify trends, compare data sources, and visualize results that can help in understanding the scale of wildlife losses.
+The goal is to identify trends, compare data sources, and present results that can help in understanding the scale of wildlife losses.
 
 ---
 
