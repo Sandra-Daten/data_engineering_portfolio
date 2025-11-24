@@ -157,8 +157,8 @@ df_pivot.show(truncate=False)
 # Divljač sa najvećim skokom u broju gubitaka (u lovu) u odnosu na prethodnu godinu
 window = Window.partitionBy("N_VrstaDivljaci").orderBy("God")
 
-df_with_diff = df.withColumn("Prev_Vrednost_lov", lag("Vrednost_lov").over(window)) \
-                 .withColumn("Razlika", col("Vrednost_lov") - col("Prev_Vrednost_lov"))
+df_with_diff = df.withColumn("Pre_Vrednost_lov", lag("Vrednost_lov").over(window)) \
+                 .withColumn("Razlika", col("Vrednost_lov") - col("Pre_Vrednost_lov"))
 
 df_with_max = df_with_diff.orderBy(col("Razlika").desc()).limit(1)
 
